@@ -1,21 +1,69 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar [color]="appPage.color">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button color="light"></ion-menu-button>
     </ion-buttons>
-    <ion-title>{{ folder }}</ion-title>
+    <ion-title>{{ appPage.title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="light" (click)="navToHome()">
+        <ion-icon slot="icon-only" name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">{{ folder }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <form [formGroup]="examForm">
+    <ion-list *ngFor="let component of currentExam.components; let i = index">
+      <div [formGroup]="examForm.get('component' + i)">
+        <ion-list-header mode="ios">
+          <ion-icon class="list-header-icon" [name]="component.icon"></ion-icon>
+          <ion-label>{{ component.title }} <ion-note class="label-note">(  {{ component.numberOfItems }} items = {{ component.maxScore }} points )</ion-note></ion-label>
+        </ion-list-header>
+        <ion-note class="min-score">Minimum score to pass: {{ component.minScoreToPass }} points</ion-note>
+        <ion-item-divider></ion-item-divider>
+    
+        
+        <ion-item *ngFor="let part of component.parts; let c = index">
+          <ion-grid>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="9">
+                <ion-label>{{ part.name }}</ion-label>
+                <ion-note><ion-text *ngIf="part.numberOfItems">{{ part.numberOfItems }} items / </ion-text>{{ part.score }} points</ion-note>
+              </ion-col>
+              <ion-col>
+                <ion-input type="number" inputmode="tel" class="score-input" [max]="part.score" min="0" maxlength="2" formControlName="part{{c}}"></ion-input>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+        <ion-item color="light">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6">
+                <ion-label class="text-bold">
+                  Total:
+                </ion-label>
+              </ion-col>
+              <ion-col *ngIf="componentsScore[i]">
+                <ion-text [color]="componentsScore[i]?.totalPoints >= component.minScoreToPass ? 'success' : 'danger'" class="text-bold">
+                  {{ componentsScore[i].totalPoints }} points ({{ componentsScore[i].percentage | number : '1.0-0' }} %) </ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </div>
+      
+    </ion-list>
+  </form>
+  
+  <div class="button-container">
+    <ion-button mode="md" color="secondary" (click)="calculateScore()" [disabled]="!examForm.valid" class="submit-button">Calculate Score</ion-button>
   </div>
+
+  <div>
+    Score: {{ score }}
+  </div>
+
+  <app-graph [componentsScore]="componentsScore" [correctionTemplate]="currentCorrection"></app-graph>
 </ion-content>
