@@ -75,7 +75,7 @@ export class FolderPage implements OnInit, OnDestroy {
       this.examForm.get(`component${index}`).valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(groupValue => {
         const values: any[] = Object.values(groupValue);
         // TODO
-        if (values && values.every(v => v && v !== null && v !== undefined && v !== '') && this.examForm.get(`component${index}`).valid) {
+        if (values && values.every(v => v !== null && v !== undefined && v !== '') && this.examForm.get(`component${index}`).valid) {
           const totalPoints = values.reduce((accumulator, currentValue) => accumulator + currentValue);
           this.componentsScore[index] = {
             id: this.currentExam.components[index].id,
