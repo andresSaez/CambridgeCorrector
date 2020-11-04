@@ -12,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" #pageTop>
   <form [formGroup]="examForm">
     <ion-list *ngFor="let component of currentExam.components; let i = index">
       <div [formGroup]="examForm.get('component' + i)">
@@ -32,7 +32,7 @@
                 <ion-note><ion-text *ngIf="part.numberOfItems">{{ part.numberOfItems }} items / </ion-text>{{ part.score }} points</ion-note>
               </ion-col>
               <ion-col>
-                <ion-input type="number" inputmode="tel" class="score-input" [max]="part.score" min="0" maxlength="2" formControlName="part{{c}}"></ion-input>
+                <ion-input type="number" [readonly]="score !== null" inputmode="tel" class="score-input" [max]="part.score" min="0" maxlength="2" formControlName="part{{c}}"></ion-input>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -58,7 +58,11 @@
   </form>
   
   <div class="button-container">
-    <ion-button mode="md" color="secondary" (click)="calculateScore()" [disabled]="!examForm.valid" class="submit-button">Calculate Score</ion-button>
+    <ion-button *ngIf="!score" mode="md" color="secondary" (click)="calculateScore()" [disabled]="!examForm.valid" class="submit-button">Calculate Score</ion-button>
+    <ion-button *ngIf="score" mode="md" color="light" (click)="resetForm()" class="submit-button">
+      <ion-icon slot="start" name="reload-outline"></ion-icon>
+      Reset
+    </ion-button>
   </div>
 
   <div *ngIf="score" class="score-container">

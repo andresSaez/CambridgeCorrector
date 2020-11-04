@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -8,6 +8,7 @@ import { ComponentScore, EnglishLevel, ExamCorrectionTemplate } from './models/e
 import { takeUntil } from 'rxjs/operators';
 import { NavController } from '@ionic/angular';
 import { correctionA2, correctionB1, correctionB2, correctionC1, correctionC2 } from './corrections';
+import { IonContent } from '@ionic/angular';
 
 @Component({
   selector: 'app-folder',
@@ -16,6 +17,7 @@ import { correctionA2, correctionB1, correctionB2, correctionC1, correctionC2 } 
 })
 export class FolderPage implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject();
+  @ViewChild('pageTop') pageTop: IonContent;
 
   public examForm: FormGroup =  new FormGroup({});
   public levels: EnglishLevel[] = [a2, b1, b2, c1, c2];
@@ -29,7 +31,7 @@ export class FolderPage implements OnInit, OnDestroy {
   public folder: string;
   public appPage: AppPage = null;
 
-  public score: number;
+  public score: number = null;
   public gradeObtained: string;
 
   constructor(
@@ -71,6 +73,14 @@ export class FolderPage implements OnInit, OnDestroy {
     this.gradeObtained = this.currentCorrection.correctionTemplate.some(e => this.score >= e[0] && this.score <= e[1]) ?
       this.currentCorrection.correctionTemplate.find(el => this.score >= el[0] && this.score <= el[1])[4] :
       `${this.currentCorrection.correctionTemplate[this.currentCorrection.correctionTemplate.length - 1][4]} - No result, CEFR level or certificate given`;
+  }
+
+  public resetForm(): void {
+    this.score = null;
+    this.gradeObtained = null;
+    this.examForm.reset();
+
+    this.pageTop.scrollToTop();
   }
 
   private formSubscriptions(): void {
