@@ -62,7 +62,10 @@ export interface ComponentScore {
 
 export interface ExamCorrectionTemplate {
     id: string;
-    correctionTemplate: any;
+    maxScore: number;
+    minPercentage: number;
+    background: string;
+    correctionTemplate: any[];
     components: ComponentCorrectionTemplate[];
 }
 

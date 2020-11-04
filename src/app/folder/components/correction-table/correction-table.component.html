@@ -1,0 +1,28 @@
+<div class="correction-table">
+  <div class="ion-text-uppercase table-caption">Score table</div>
+  <ion-grid>
+    <ion-row class="ion-align-items-stretch">
+      <ion-col size="4" class="ion-align-self-center">
+        <div class="ion-text-uppercase ion-text-center table-head" [style.background-color]="correctionTemplate?.background">%</div>
+      </ion-col>
+      <ion-col size="4" class="ion-align-self-center">
+        <div class="ion-text-uppercase ion-text-center table-head" [style.background-color]="correctionTemplate?.background">Score</div>
+      </ion-col>
+      <ion-col size="4" class="ion-align-self-center">
+        <div class="ion-text-uppercase ion-text-center table-head" [style.background-color]="correctionTemplate?.background">Grade</div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-stretch table-row"
+    *ngFor="let grade of correctionTemplate.correctionTemplate; let i = index">
+    <ion-col size="4" class="ion-align-self-center">
+      <div class="ion-text-center">{{ grade[0]}} - {{grade[1]}}%</div>
+    </ion-col>
+    <ion-col size="4" class="ion-align-self-center">
+      <div class="ion-text-center">{{ grade[2]}} - {{grade[3]}}</div>
+    </ion-col>
+    <ion-col size="4" class="ion-align-self-center">
+      <div class="ion-text-center">{{ grade[4] }}</div>
+    </ion-col>
+  </ion-row>
+  </ion-grid>
+</div>

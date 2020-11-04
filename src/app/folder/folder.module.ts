@@ -9,6 +9,7 @@ import { FolderPageRoutingModule } from './folder-routing.module';
 import { FolderPage } from './folder.page';
 import { ChartsModule } from 'ng2-charts';
 import { GraphComponent } from './components/graph/graph.component';
+import { CorrectionTableComponent } from './components/correction-table/correction-table.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { GraphComponent } from './components/graph/graph.component';
     FolderPageRoutingModule,
     ChartsModule
   ],
-  declarations: [FolderPage, GraphComponent]
+  declarations: [FolderPage, GraphComponent, CorrectionTableComponent]
 })
 export class FolderPageModule {}

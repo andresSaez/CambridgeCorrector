@@ -53,6 +53,8 @@ ion-menu-button {
 }
 
 .button-container {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
   width: 100%;
   display: flex;
   .submit-button {
@@ -62,4 +64,27 @@ ion-menu-button {
 
 .text-bold {
   font-weight: bold;
+}
+
+.score-container {
+  padding: 1rem;
+  .score-data {
+    padding: 1rem 1rem 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #9d9fa6;
+    border-radius: 8px;
+    .score-percentage {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .score-badge {
+      margin-left: 1.5rem;
+      font-size: 3rem;
+    }
+    .score-grade {
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
 }

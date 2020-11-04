@@ -2,7 +2,14 @@ import { ExamComponentKey, ExamComponentTitle, ExamCorrectionTemplate, LevelKeys
 
 export const correctionA2: ExamCorrectionTemplate = {
     id: LevelKeys.A2,
-    correctionTemplate: [[44, 140, 'Grade A (Level B1)'], [70, 133, 'Grade B (Pass)'], [85, 120, 'Grade C (Pass)'], [90, 100, 'Level A1 (Failed)']],
+    maxScore: 150,
+    minPercentage: 70,
+    background: '#3880ff',
+    correctionTemplate: [
+        [90, 100, 140, 150, 'Grade A (Level B1)'],
+        [85, 89, 133, 139, 'Grade B (Pass)'],
+        [70, 84, 120, 132, 'Grade C (Pass)'],
+        [44, 69, 100, 119, 'Level A1 (Failed)']],
     components: [
         {
             id: ExamComponentKey.READING,
